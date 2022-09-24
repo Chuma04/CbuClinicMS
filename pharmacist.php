@@ -5,7 +5,7 @@ if(!isset($_SESSION['id']))
 		{
 			header("location:signin.php");
 		}
-if($_SESSION['type']!="labtectnician")
+if($_SESSION['type']!="pharmacist")
 		{
 			header("location:signin.php");
 		}
@@ -55,9 +55,7 @@ if($_SESSION['type']!="labtectnician")
 		<link href="assets/switcher/demo.css" rel="stylesheet">	</head>
 
 	<body class="main-body  app sidebar-mini">
-		
-		
-		
+
 		<!-- Loader -->
 		<div id="global-loader">
 			<img src="assets/img/loaders/loader-4.svg" class="loader-img" alt="Loader">

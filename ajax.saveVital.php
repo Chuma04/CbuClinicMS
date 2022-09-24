@@ -1,5 +1,5 @@
 	<?php
-	require_once('settings/')
+	require_once('settings/');
 	include_once("sendsms.php");
 
 	if($_SERVER['REQUEST_METHOD']=='POST'){

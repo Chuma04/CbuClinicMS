@@ -1,4 +1,4 @@
-	<?php
+<?php
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 			
 			include("classes/class.login.php");

@@ -166,17 +166,37 @@ if(!isset($_SESSION['id']))
 					<div class="modal-body">
 						
 									
-									<div class="col-lg">
-									<label>BP</label>
-									<input type="hidden" id="openRedcordStatus" value="" name="status">
-									<input type="hidden" id="openRedcordId" value="" name="id">
-									<input id="bp" name="bp" class="form-control" placeholder="BP" type="text">
-									</div>
-									
-									<div class="col-lg">
-									<label>Temperature</label>
-										<input id="temp" name="temp" class="form-control" placeholder="Temperature" type="text">
-									</div>
+                        <div class="col-lg">
+                        <label>BP</label>
+                        <input type="hidden" id="openRedcordStatus" value="" name="status">
+                        <input type="hidden" id="openRedcordId" value="" name="id">
+                        <input id="bp" name="bp" class="form-control" placeholder="BP" type="text">
+                        </div>
+
+                        <div class="col-lg">
+                        <label>Temperature</label>
+                            <input id="temp" name="temp" class="form-control" placeholder="Temperature" type="text">
+                        </div>
+                        <!-- options of doctors -->
+                        <div class="col-lg">
+                        <label>Doctor</label>
+                            <select id="doctor" name="doctor" class="form-control">
+                                <option value="Dr. A">Dr. Ntalasha</option>
+                                <option value="Dr. B">Dr. Mufungulwa</option>
+                                <option value="Dr. C">Dr. Kalezhi</option>
+                            </select>
+                        </div>
+
+                        <!-- options of room numbers -->
+                        <div class="col-lg">
+                        <label>Room Number</label>
+                            <select id="room" name="room" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+
 
 					</div>
 					<div class="modal-footer">

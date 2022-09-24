@@ -1,17 +1,18 @@
 <?php
 	session_start();
 	include_once("classes/class.login.php");
+
 	if($_SERVER['REQUEST_METHOD']=="POST")
 	{
 		$login = new LOGIN();
 		extract($_POST);
+
 		if($login->save($lemail,$lpassword))
 		{
 			$login = $login->authenticate($lemail,$lpassword);
 			$_SESSION['id'] = $login->id;
 			$_SESSION['username'] = $login->username;
 			header("location:index.php");
-			
 		}
 	}
 		

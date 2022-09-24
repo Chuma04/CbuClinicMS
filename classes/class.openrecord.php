@@ -8,8 +8,6 @@ class OPENRECORD{
  var $status;
  var $regdate;
  
-
- 
   function __construct($id=NULL)
   {
   	if($id==NULL)
@@ -37,7 +35,6 @@ class OPENRECORD{
   {
 	  try
 	  {
-
 		global $Myconnection;
   		$stmt = $Myconnection->prepare("INSERT INTO openrecord(studentid,STATUS) VALUES(?,'0')");
 		$stmt->bindParam(1, $studentid);																										
@@ -88,8 +85,31 @@ class OPENRECORD{
 		  return false;
 	  }
   }
-  
-  
+
+  // function to return one open record by record id
+  function getOpenRecord($recordid)
+  {
+      try {
+          global $Myconnection;
+          $stmt = $Myconnection->prepare("SELECT * FROM openrecord WHERE ID=?");
+          $stmt->bindParam(1, $recordid);
+          $stmt->execute();
+          $stmt->setFetchMode(PDO::FETCH_ASSOC);
+          $openrecord = new OPENRECORD();
+
+            foreach ($stmt->fetchAll() as $k => $v) {
+                $openrecord->id = $v["ID"];
+                $openrecord->studentid = $v["STUDENTID"];
+                $openrecord->status = $v["STATUS"];
+                $openrecord->regdate = $v["REGDATE"];
+            }
+            return $openrecord;
+
+      } catch (exception $ex) {
+          return false;
+      }
+  }
+
 
   function getOpenRecords($date=null,$status=null)
   {

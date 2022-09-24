@@ -3,6 +3,8 @@
 			
 			include("classes/class.openrecord.php");
 			include("classes/class.student.php");
+			include_once("sendsms.php");
+
 			extract($_GET);
 			extract($_POST);
 			$student = new STUDENT();
@@ -11,13 +13,17 @@
 			if($opnrc->save($studentId))
 			{
 				echo 'Record opened';
-				
-			}else
+				// send sms to the student with id $studentId
+				$student->getStudentByStudentId($studentId);
+				$phone = $student->phone;
+				send_sms("Your record has been opened. Go to room number 4 at the CBU clinic for your 
+					vitals collection."
+					, $phone);
+			}
+			else
 			{
 				echo 'Something went wrong.';
 			}
-	
-		
 ?>
 
 

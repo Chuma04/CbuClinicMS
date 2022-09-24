@@ -1,17 +1,19 @@
 <?php
-	require_once('settings/connectionsettings.php');
 	include_once("sendsms.php");
 
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 			
 			include("classes/class.vital.php");
+			include("classes/class.student.php");
+			include("classes/class.openrecord.php");
+
 			extract($_POST);
 			$lgn = new VITAL();
 			if($lgn->save($id,$bp,$temp))
 			{
-				//send sms to the student with and open record of id $id
 				echo 'Vitals Added';
 
+				//send sms to the student with and open record of id $id
 				$rcrd = new OPENRECORD();
 				$record = $rcrd->getOpenRecord($id);
 

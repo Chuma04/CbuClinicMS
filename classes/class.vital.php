@@ -1,6 +1,10 @@
 <?php
 include_once("Context.php");
+//include_once("classes/class.student.php");
+//include_once("classes/class.openrecord.php");
 require_once('settings/connectionsettings.php');
+include_once("sendsms.php");
+
 class VITAL{
 	
  var $id;
@@ -40,8 +44,9 @@ class VITAL{
   	}
   }
 
-  function save($recordid,$bp,$temp)
+  function save($recordid,$bp,$temp,$doctor,$room)
   {
+      $saved = false;
 	  try
 	  {
 
@@ -51,6 +56,8 @@ class VITAL{
 		$stmt->bindParam(2, $bp);																										
 		$stmt->bindParam(3, $temp);																										
 		$stmt->execute();
+        $saved = true;
+
 		 return true;
 		 
 	  }catch(exception $ex)
@@ -58,6 +65,22 @@ class VITAL{
 		 echo $ex->getMessage();
 		  return false;
 	  }
+      finally{
+          if($saved){
+              //send sms to the student with an open record of id $id
+              $rcrd = new OPENRECORD();
+              $record = $rcrd->getOpenRecord($recordid);
+
+              $stdnt = new STUDENT();
+              $student = $stdnt->getStudentByStudentId($record->studentid);
+              $phone = $student->phone;
+              $message = "Your BP is ".$bp." and your temperature is ".$temp.
+                  ". Go to room ". $room . " and see ".$doctor.
+                  " for your checkup.";
+
+              send_sms($message, $phone);
+          }
+      }
   }
   
   

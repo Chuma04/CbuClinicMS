@@ -1,5 +1,6 @@
 <?php
 include_once("Context.php");
+include_once("sendsms.php");
 require_once('settings/connectionsettings.php');
 class DIAGNOSIS{
 	
@@ -8,8 +9,6 @@ class DIAGNOSIS{
  var $diagnosis; 	 		 		 	 	 	 		 		 	 	 	
  var $status;
  var $regdate;
- 
-
 
  
   function __construct($id=NULL)
@@ -36,8 +35,9 @@ class DIAGNOSIS{
   	}
   }
 
-  function save($recordid,$diagnosis)
+  function save($recordid,$diagnosis, $referal, $prescription)
   {
+      $saved = false;
 	  try
 	  {
 
@@ -46,6 +46,7 @@ class DIAGNOSIS{
 		$stmt->bindParam(1, $recordid);																										
 		$stmt->bindParam(2, $diagnosis);																																																		
 		$stmt->execute();
+        $saved = true;
 		 return true;
 		 
 	  }catch(exception $ex)
@@ -53,6 +54,28 @@ class DIAGNOSIS{
 		 echo $ex->getMessage();
 		  return false;
 	  }
+      finally{
+          if($saved){
+              // send sms here
+              $rcrd = new OPENRECORD();
+              $record = $rcrd->getOpenRecord($recordid);
+
+              $stdnt = new STUDENT();
+              $student = $stdnt->getStudentByStudentId($record->studentid);
+              $phone = $student->phone;
+
+              if($referal == 'labtec'){
+                  send_sms("Your diagnosis is ".$diagnosis.
+                      ". The doctor advises that you go to room 7 for a lab test."
+                      ,$phone);
+              }
+              else{
+                  send_sms("Your Diagnosis is ".$diagnosis." and the doctor's prescription is "
+                      .$prescription. ". Proceed to the pharmacy in room 5 for your medication."
+                      ,$phone);
+              }
+          }
+      }
   }
   
   
@@ -121,7 +144,5 @@ class DIAGNOSIS{
 		  return false;
 	  }
   }
-
-
 }
 ?>

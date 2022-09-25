@@ -151,11 +151,12 @@ class STUDENT{
 		global $Myconnection;
   		$stmt = $Myconnection->prepare("SELECT * FROM student WHERE STUDENTID=".$StudentId);				
 		$stmt->execute();
-		$stmt->setFetchMode(PDO::FETCH_ASSOC); 
-		$students = array();
-		foreach($stmt->fetchAll() as $k=>$v) 
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		//$students = array();
+        $student = new STUDENT();
+		foreach($stmt->fetchAll() as $k=>$v)
 		{ 	
-			 $student = new STUDENT();
+			 //$student = new STUDENT();
 			 $student->id= $v["ID"];
 			 $student->firstname= $v["FIRSTNAME"]; 	 		 	 	
 			 $student->lastname= $v["LASTNAME"]; 	 		 	 	
@@ -165,15 +166,13 @@ class STUDENT{
 			 $student->phone= $v["PHONE"];
 			 $student->status= $v["STATUS"];
 			 $student->regdate = $v["REGDATE"];
-			 $students[] = $student;
+			 //$students[] = $student;
 		}	
-		return $students;
+		return $student;
 	  }catch(Exception $ex)
 	  {
 		  return false;
 	  }
   }
-
-
 }
 ?>

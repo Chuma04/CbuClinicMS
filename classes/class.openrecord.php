@@ -1,6 +1,9 @@
 <?php
 include_once("Context.php");
 require_once('settings/connectionsettings.php');
+//include_once("classes/class.student.php");
+include_once("sendsms.php");
+
 class OPENRECORD{
 	
  var $id;
@@ -33,18 +36,33 @@ class OPENRECORD{
 
   function save($studentid,$status=null)
   {
+      $saved = false;
 	  try
 	  {
 		global $Myconnection;
   		$stmt = $Myconnection->prepare("INSERT INTO openrecord(studentid,STATUS) VALUES(?,'0')");
 		$stmt->bindParam(1, $studentid);																										
 		$stmt->execute();
+        $saved = true;
+
 		 return true;
 		 
 	  }catch(exception $ex)
 	  {
 		  return false;
-	  }
+	  } finally {
+          if($saved){
+              $stdnt = new STUDENT();
+              $student = $stdnt->getStudentByStudentId($studentid);
+              $phone   = $student->phone;
+              $fname   = $student->firstname;
+              $lname   = $student->lastname;
+              send_sms("Hello ".$fname. " ".$lname.". A record under your name has been opened. Go to room number 4 at the CBU clinic for your 
+					vitals collection."
+                  , $phone);
+          }
+
+      }
   }
   
   
@@ -97,7 +115,7 @@ class OPENRECORD{
           $stmt->setFetchMode(PDO::FETCH_ASSOC);
           $openrecord = new OPENRECORD();
 
-            foreach ($stmt->fetchAll() as $k => $v) {
+            foreach ($stmt->fetchAll() as $v) {
                 $openrecord->id = $v["ID"];
                 $openrecord->studentid = $v["STUDENTID"];
                 $openrecord->status = $v["STATUS"];

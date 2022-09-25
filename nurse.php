@@ -179,11 +179,11 @@ if(!isset($_SESSION['id']))
                         </div>
                         <!-- options of doctors -->
                         <div class="col-lg">
-                        <label>Doctor</label>
+                            <label>Doctor</label>
                             <select id="doctor" name="doctor" class="form-control">
-                                <option value="Dr. A">Dr. Ntalasha</option>
-                                <option value="Dr. B">Dr. Mufungulwa</option>
-                                <option value="Dr. C">Dr. Kalezhi</option>
+                                <option value="Dr Ntalasha">Dr. Ntalasha</option>
+                                <option value="Dr Mufungulwa">Dr. Mufungulwa</option>
+                                <option value="Dr Kalezhi">Dr. Kalezhi</option>
                             </select>
                         </div>
 

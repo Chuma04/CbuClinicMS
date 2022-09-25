@@ -174,6 +174,17 @@ if($_SESSION['type']!="doctor")
 									<label>Diagnosis</label>
 									<input type="hidden" id="openRedcordId" value="" name="id">
 									<textarea id="diagnosisField" name="diagnosis" class="form-control" placeholder="type disgnosis here" ></textarea>
+                                        <br>
+                                    <label for="prescription">Prescrition</label>
+                                        <textarea id="prescription" name="prescription" class="form-control" placeholder="type prescrition here" ></textarea>
+                                        <br>
+                                        <div class="col-lg">
+                                            <label for="referal">Refer to</label>
+                                            <select id="referal" name="referal" class="form-control">
+                                                <option value="pharmacy">Pharmacy</option>
+                                                <option value="labtec">Lab</option>
+                                            </select>
+                                        </div>
 									</div>
 									
 									<br/>
